@@ -78,6 +78,7 @@
         },
         user: {},
         autoscroll: false,
+        intervalId: null,
         loading: false,
       }
     },
@@ -95,12 +96,16 @@
           this.$router.push('/login')
         })
       this.autoscroll = true
+      this.startInterval()
       this.loadMessages()
     },
-    updated() {
-
+    beforeDestroy() {
+      clearInterval(this.intervalId)
     },
     methods: {
+      startInterval: function () {
+        this.intervalId = setInterval(this.loadMessages, 5000)
+      },
       scrollToBottom: function() {
         if (this.autoscroll) {
           let chatbox = this.$el.querySelector("#chat-box")
@@ -109,6 +114,7 @@
         this.autoscroll = false
       },
       loadMessages: function() {
+        this.loading = true
         let chatbox = this.$el.querySelector("#chat-box")
         if (chatbox.scrollHeight - chatbox.scrollTop - chatbox.clientHeight <= 20) {
           this.autoscroll = true
