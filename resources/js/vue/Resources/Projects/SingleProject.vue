@@ -35,6 +35,7 @@
                     type='text'
                     name='title'
                     class='form-control form-control-lg'
+                    v-bind:class="{ 'is-invalid': errors.title.length }"
                     placeholder='Task title'
                     v-model="form.title"
                   />
@@ -144,8 +145,9 @@
             this.loadProject()
           })
           .catch(error => {
-            this.errors.title = error.response.data.title !== undefined ? error.response.data.title : []
-            loading = false
+            console.log(error.response.data)
+            this.errors.title = error.response.data.errors.title !== undefined ? error.response.data.errors.title : []
+            this.loading = false
           })
       }
     },

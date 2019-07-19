@@ -2228,6 +2228,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2284,7 +2288,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.loadMessages();
       })["catch"](function (error) {
         _this3.errors.message = error.response.data.message !== undefined ? error.response.data.message : [];
-        loading = false;
+        _this3.loading = false;
       });
     }
   },
@@ -2610,6 +2614,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2681,8 +2686,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this5.loadProject();
       })["catch"](function (error) {
-        _this5.errors.title = error.response.data.title !== undefined ? error.response.data.title : [];
-        loading = false;
+        console.log(error.response.data);
+        _this5.errors.title = error.response.data.errors.title !== undefined ? error.response.data.errors.title : [];
+        _this5.loading = false;
       });
     }
   },
@@ -38889,15 +38895,23 @@ var render = function() {
                         "div",
                         {
                           key: message.id,
-                          staticClass: "row flex-row-reverse"
+                          staticClass: "row",
+                          class: {
+                            "flex-row-reverse": message.user.id === _vm.user.id
+                          }
                         },
                         [
                           _c("div", { staticClass: "col-7" }, [
                             _c(
                               "div",
                               {
-                                staticClass:
-                                  "alert alert-primary alert-secondary",
+                                staticClass: "alert",
+                                class: {
+                                  "alert-secondary":
+                                    message.user.id !== _vm.user.id,
+                                  "alert-primary":
+                                    message.user.id === _vm.user.id
+                                },
                                 attrs: { role: "alert" }
                               },
                               [
@@ -38938,6 +38952,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-lg",
+                    class: { "is-invalid": _vm.errors.message.length },
                     attrs: {
                       id: "message",
                       type: "text",
@@ -38967,7 +38982,13 @@ var render = function() {
                     )
                   ])
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _vm.errors.message.length
+                ? _c("span", { staticClass: "invalid-feedback" }, [
+                    _c("strong", [_vm._v(_vm._s(_vm.errors.message[0]))])
+                  ])
+                : _vm._e()
             ])
           ])
         ])
@@ -39332,6 +39353,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control form-control-lg",
+                      class: { "is-invalid": _vm.errors.title.length },
                       attrs: {
                         type: "text",
                         name: "title",

@@ -20,9 +20,9 @@
             <div class='card-body'>
               <div id="chat-box">
                 <div id="chat-content">
-                  <div v-for="message in messages" :key="message.id" class='row flex-row-reverse'>
+                  <div v-for="message in messages" :key="message.id" class='row' v-bind:class="{'flex-row-reverse': message.user.id === user.id}">
                     <div class='col-7'>
-                      <div class='alert alert-primary alert-secondary' role="alert">
+                      <div class='alert' v-bind:class="{'alert-secondary': message.user.id !== user.id, 'alert-primary': message.user.id === user.id}" role="alert">
                         <strong>{{message.user.name}}</strong>
                         <p class='p-0 m-0'>{{message.message}}</p>
                       </div>
@@ -42,6 +42,7 @@
                   id="message"
                   type='text'
                   class='form-control form-control-lg'
+                  v-bind:class="{ 'is-invalid': errors.message.length }"
                   placeholder="Message..."
                   name="message"
                   v-model="form.message"
@@ -51,6 +52,9 @@
                 </div>
               </div>
             </form>
+            <span v-if="errors.message.length" class='invalid-feedback'>
+              <strong>{{ errors.message[0] }}</strong>
+            </span>
           </div>
         </div>
       </div>
@@ -114,7 +118,7 @@
           })
           .catch(error => {
             this.errors.message = error.response.data.message !== undefined ? error.response.data.message : []
-            loading = false
+            this.loading = false
           })
       }
     },
