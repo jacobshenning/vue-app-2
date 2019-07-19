@@ -18,12 +18,14 @@
                 <router-link class="btn btn-outline-primary" to='/structure'>Checkout Structure</router-link>
                 <router-link class="btn btn-outline-primary" to='/register'>Create Account</router-link>
                 <router-link class="btn btn-outline-primary" to='/dashboard'>Visit Dashboard</router-link>
+                <a class="btn btn-outline-primary" href='https://github.com/jacobshenning/vue-app/issues/new' target='_blank'>Report Bug</a>
                 <a class="btn btn-outline-primary" href='https://github.com/jacobshenning/vue-app' target='_blank'>GitHub</a>
               </div>
               <div class="btn-group-vertical btn-block d-flex d-md-none">
                 <router-link class="btn btn-outline-primary" to='/structure'>Checkout Structure</router-link>
                 <router-link class="btn btn-outline-primary" to='/register'>Create Account</router-link>
                 <router-link class="btn btn-outline-primary" to='/dashboard'>Visit Dashboard</router-link>
+                <a class="btn btn-outline-primary" href='https://github.com/jacobshenning/vue-app/issues/new' target='_blank'>Report Bug</a>
                 <a class="btn btn-outline-primary" href='https://github.com/jacobshenning/vue-app' target='_blank'>GitHub</a>
               </div>
             </div>
