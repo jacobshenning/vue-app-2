@@ -1,5 +1,5 @@
 <template>
-  <div id="message-box">
+  <div id="message-box" class='pb-2'>
     <Header />
     <div class='container py-4'>
       <div class='row justify-content-center'>
@@ -17,8 +17,8 @@
               <div class='progress-bar'></div>
             </div>
 
-            <div class='card-body'>
-              <div id="chat-box">
+            <div class='card-body py-0'>
+              <div id="chat-box" class='pt-3'>
                 <div id="chat-content">
                   <div v-for="message in messages" :key="message.id" class='row' v-bind:class="{'flex-row-reverse': message.user.id === user.id}">
                     <div class='col-7'>
@@ -48,13 +48,14 @@
                   v-model="form.message"
                 />
                 <div class="input-group-append">
-                  <button v-on:click="handleCreateNewMessage" class="btn btn-primary px-4" type="submit">Send</button>
+                  <button v-on:click="handleCreateNewMessage" class="btn btn-primary px-4" type="submit">Send Message</button>
                 </div>
+
+                <span v-if="errors.message.length" class='invalid-feedback position-absolute mt-5'>
+                  <strong>{{ errors.message }}</strong>
+                </span>
               </div>
             </form>
-            <span v-if="errors.message.length" class='invalid-feedback'>
-              <strong>{{ errors.message[0] }}</strong>
-            </span>
           </div>
         </div>
       </div>
@@ -76,6 +77,7 @@
           message: []
         },
         user: {},
+        autoscroll: false,
         loading: false,
       }
     },
@@ -92,15 +94,33 @@
         .catch(error => {
           this.$router.push('/login')
         })
+      this.autoscroll = true
       this.loadMessages()
     },
+    updated() {
+
+    },
     methods: {
+      scrollToBottom: function() {
+        if (this.autoscroll) {
+          let chatbox = this.$el.querySelector("#chat-box")
+          chatbox.scrollTop = chatbox.scrollHeight
+        }
+        this.autoscroll = false
+      },
       loadMessages: function() {
-        axios.get('/api/messages/all').then(response => {
+        let chatbox = this.$el.querySelector("#chat-box")
+        if (chatbox.scrollHeight - chatbox.scrollTop - chatbox.clientHeight <= 20) {
+          this.autoscroll = true
+        }
+        axios
+        .get('/api/messages/all')
+        .then(response => {
           this.messages = response.data
           this.loading = false
-          var chatBox = document.getElementById('chat-box');
-          chatBox.scrollTop = chatBox.scrollHeight;
+          this.$nextTick(() => {
+            this.scrollToBottom()
+          })
         }).catch(error => {
           console.log(error)
         })
@@ -109,6 +129,7 @@
         event.preventDefault()
 
         this.loading = true
+        this.errors.message = []
 
         axios
           .post('/api/messages/create', this.form)

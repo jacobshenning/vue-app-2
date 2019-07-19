@@ -24,7 +24,7 @@
                 class='btn btn-primary btn-sm'
                 v-on:click="handleMarkProjectAsCompleted"
               >
-                Mark as completed
+                Mark project as completed
               </button>
 
               <hr />
@@ -41,8 +41,12 @@
                   />
 
                   <div class='input-group-append'>
-                    <button v-on:click="handleCreateNewTask($event)" class='btn btn-primary'>Add</button>
+                    <button v-on:click="handleCreateNewTask($event)" class='btn btn-primary'>Add Task</button>
                   </div>
+
+                  <span v-if="errors.title.length" class='invalid-feedback'>
+                    <strong>{{ errors.title[0] }}</strong>
+                  </span>
 
                 </div>
               </form>
@@ -59,7 +63,7 @@
                     class='btn btn-primary btn-sm'
                     v-on:click="handleMarkTaskAsCompleted($event, task.id)"
                   >
-                    Mark as completed
+                    Mark task as completed
                   </button>
                 </li>
               </ul>
@@ -142,10 +146,10 @@
           .post('/api/projects/' + this.$route.params.id + '/tasks', this.form)
           .then(response => {
             this.form.title = ''
+            this.errors.title = []
             this.loadProject()
           })
           .catch(error => {
-            console.log(error.response.data)
             this.errors.title = error.response.data.errors.title !== undefined ? error.response.data.errors.title : []
             this.loading = false
           })

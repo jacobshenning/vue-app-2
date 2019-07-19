@@ -12,7 +12,7 @@
 */
 
 Route::get('/test', function() {
-  return 'Testing';
+  return 'Unauthenticated';
 })->name('login');
 
 Route::any('/{any}', function() {

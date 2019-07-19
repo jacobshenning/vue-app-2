@@ -51,6 +51,7 @@
        event.preventDefault()
        window.api_token = false
        document.cookie = "api_token=false; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+       this.api_token = false
        this.$router.push('/')
      }
    }

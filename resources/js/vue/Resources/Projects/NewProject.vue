@@ -52,7 +52,7 @@
                 </span>
               </div>
 
-              <button v-on:click="handleCreateProjectAttempt($event)" class='btn btn-primary'>Create</button>
+              <button v-on:click="handleCreateProjectAttempt($event)" class='btn btn-primary'>Create New Project</button>
             </form>
 
           </div>

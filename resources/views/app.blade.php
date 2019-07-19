@@ -8,6 +8,7 @@
 
         <title>Vue app</title>
         <meta name="description" content="Vue app">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
