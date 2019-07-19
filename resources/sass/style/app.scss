@@ -1,0 +1,25 @@
+
+@import 'sections/sidebar';
+
+@import 'Resources/Message/MessageBox';
+
+.progress {
+  border-radius: 0;
+  height: 2px;
+}
+
+.progress-bar {
+  width: 100%;
+}
+
+.loading-bar-tall {
+  height: 4px;
+}
+
+@media (min-width: 768px) {
+  .dont-collapse-sm {
+    display: block;
+    height: auto !important;
+    visibility: visible;
+  }
+}
